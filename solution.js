@@ -1,3 +1,12 @@
-module.exports = function() {
-    return "Hello World";
+function decodeNumber(binaryNumber) {
+
+}
+
+function getPowerConsumption(gammaRate, epsilonRate) {
+    
+}
+
+module.exports = {
+    decodeNumber,
+    getPowerConsumption
 }
