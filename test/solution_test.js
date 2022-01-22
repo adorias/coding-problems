@@ -1,30 +1,37 @@
 let assert = require('chai').assert;
-let compareMeasurements = require('../solution');
+let solFunctions = require('../solution');
 
-describe('Total depth measurement', () => {
+describe('Comparing current and previous sums', () => {
     it('Increased', () => {
-        let currentMeasurement = 205;
-        let previousMeasurement = 200;
-        let index = 3;
-        assert.equal(compareMeasurements(currentMeasurement, previousMeasurement, index), 'Increased');
+        let currentSum = 618, previousSum = 607;
+        assert.equal(solFunctions.compareSums(currentSum, previousSum), 'Increased');
     });
     it('Decreased', () => {
-        let currentMeasurement = 199;
-        let previousMeasurement = 200;
-        let index = 2;
-        assert.equal(compareMeasurements(currentMeasurement, previousMeasurement, index), 'Decreased');
+        let currentSum = 624, previousSum = 632;
+        assert.equal(solFunctions.compareSums(currentSum, previousSum), 'Decreased');
     });
     it('Did not change', () => {
-        let currentMeasurement = 200;
-        let previousMeasurement = 200;
-        let index = 1;
-        assert.equal(compareMeasurements(currentMeasurement, previousMeasurement, index), 'No change');
+        let currentSum = 622, previousSum = 622;
+        assert.equal(solFunctions.compareSums(currentSum, previousSum), 'No change');
     });
-    it('has no previous measurement', () => {
-        let currentMeasurement = 200;
-        let previousMeasurement = null;
-        let index = 0;
-        assert.equal(compareMeasurements(currentMeasurement, previousMeasurement, index), 'No previous measurement');
+    it('has no previous sum', () => {
+        let currentSum = 607, previousSum = null;
+        assert.equal(solFunctions.compareSums(currentSum, previousSum), 'No previous sum');
+    });
+});
+
+describe('Getting the current sum', () => {
+    it('All variables have values', () => {
+        let currentMeasurement = 199, firstPrevMeasurement = 200, secondPrevMeasurement = 208;
+        assert.equal(solFunctions.getCurrentSum(currentMeasurement, firstPrevMeasurement, secondPrevMeasurement), 607);
+    });
+    it('one variable has missing value', () => {
+        let currentMeasurement = 199, firstPrevMeasurement = 200, secondPrevMeasurement = null;
+        assert.equal(solFunctions.getCurrentSum(currentMeasurement, firstPrevMeasurement, secondPrevMeasurement), null);
+    });
+    it('two variables have missing values', () => {
+        let currentMeasurement = 199, firstPrevMeasurement = null, secondPrevMeasurement = null;
+        assert.equal(solFunctions.getCurrentSum(currentMeasurement, firstPrevMeasurement, secondPrevMeasurement), null);
     });
 });
 
