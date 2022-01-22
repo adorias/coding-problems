@@ -16,6 +16,6 @@ describe('Submarine Movement', () => {
     });
     it('Final horizontal position and final depth should be multiplied', () => {
         let horizontalPos = 15, depth = 10;
-        assert.equal(solution.sum(horizontalPos, depth), 150);
+        assert.equal(solution.product(horizontalPos, depth), 150);
     });
 });
