@@ -17,14 +17,14 @@ describe('Oxygen Generator Rating', function() {
             '00010',
             '01010'
         ]
-        assert.equal(solution.filterAt(0, diagnosticReport, 'OGR'), ['11110','10110','10111','10101','11100','10000','11001']);
+        assert.equal(JSON.stringify(solution.filterAt(0, diagnosticReport, 'OGR')), JSON.stringify(['11110','10110','10111','10101','11100','10000','11001']));
     });
     it('If equally common, is the array keeping all values with a 1', function() {
         let diagnosticReport = [
             '10110',
             '10111',
         ]
-        assert.equal(solution.filterAt(4, diagnosticReport, 'OGR'), ['10111']);
+        assert.equal(JSON.stringify(solution.filterAt(4, diagnosticReport, 'OGR')), JSON.stringify(['10111']));
     });
     it('If you have only 1 number left, is it stopping.', function() {
         let diagnosticReport = [
@@ -50,14 +50,14 @@ describe('CO2 Scrubber Rating', function() {
             '00010',
             '01010'
         ]
-        assert.equal(solution.filterAt(0, diagnosticReport, 'CSR'), ['00100','01111','00111','00010','01010']);
+        assert.equal(JSON.stringify(solution.filterAt(0, diagnosticReport, 'CSR')), JSON.stringify(['00100','01111','00111','00010','01010']));
     });
     it('If equally common, is the array keeping all values with a 0', function() {
         let diagnosticReport = [
             '01111',
             '01010',
         ]
-        assert.equal(solution.filterAt(4, diagnosticReport, 'CSR'), ['01010']);
+        assert.equal(JSON.stringify(solution.filterAt(4, diagnosticReport, 'CSR')), JSON.stringify(['01010']));
     });
     it('If you have only 1 number left, is it stopping.', function() {
         let diagnosticReport = [
