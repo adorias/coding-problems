@@ -1,18 +1,77 @@
 var assert = require('chai').assert;
 var solution = require('../solution');
 
-describe('Diagnostic report evaluation', function() {
-    it('Is the binary number incrementing when each position is equal to 1', function() {
-        let binaryNumber = '11111';
-        assert.equal(solution.decodeNumber(binaryNumber), 'Incremented at position: 0,1,2,3,4,');
+describe('Oxygen Generator Rating', function() {
+    it('Is the array being filtered by the most common value', function() {
+        let diagnosticReport = [
+            '00100',
+            '11110',
+            '10110',
+            '10111',
+            '10101',
+            '01111',
+            '00111',
+            '11100',
+            '10000',
+            '11001',
+            '00010',
+            '01010'
+        ]
+        assert.equal(solution.filterAt(0, diagnosticReport, 'OGR'), ['11110','10110','10111','10101','11100','10000','11001']);
     });
-    it('Is the binary number not incrementing when each position is equal to 0', function() {
-        let binaryNumber = '00000';
-        assert.equal(solution.decodeNumber(binaryNumber), 'Incremented at position: ');
+    it('If equally common, is the array keeping all values with a 1', function() {
+        let diagnosticReport = [
+            '10110',
+            '10111',
+        ]
+        assert.equal(solution.filterAt(4, diagnosticReport, 'OGR'), ['10111']);
     });
-    it('Is the power consumption equal to the gamma rate multiplied by the epsilon rate', function() {
-        let gammaRate = 34;
-        let epsilonRate = 12;
-        assert.equal(solution.getPowerConsumption(gammaRate, epsilonRate), 408);
+    it('If you have only 1 number left, is it stopping.', function() {
+        let diagnosticReport = [
+            '10111',
+        ]
+        assert.equal(solution.filterAt(0, diagnosticReport, 'OGR'), ['10111']);
     });
+});
+
+describe('CO2 Scrubber Rating', function() {
+    it('Is the array being filtered by the least common value', function() {
+        let diagnosticReport = [
+            '00100',
+            '11110',
+            '10110',
+            '10111',
+            '10101',
+            '01111',
+            '00111',
+            '11100',
+            '10000',
+            '11001',
+            '00010',
+            '01010'
+        ]
+        assert.equal(solution.filterAt(0, diagnosticReport, 'CSR'), ['00100','01111','00111','00010','01010']);
+    });
+    it('If equally common, is the array keeping all values with a 0', function() {
+        let diagnosticReport = [
+            '01111',
+            '01010',
+        ]
+        assert.equal(solution.filterAt(4, diagnosticReport, 'CSR'), ['01010']);
+    });
+    it('If you have only 1 number left, is it stopping.', function() {
+        let diagnosticReport = [
+            '01010',
+        ]
+        assert.equal(solution.filterAt(0, diagnosticReport, 'CSR'), ['01010']);
+    });
+});
+
+describe('Life Support Rating', function() {
+    it('Is the life support rating equal to the oxygen generator rating multiplied by the CO2 scrubber rating', function() {
+        let oxyGenRating = 34;
+        let CO2ScrubberRating = 12;
+        assert.equal(solution.getLifeSupportRating(oxyGenRating, CO2ScrubberRating), 408);
+    });
+
 });
