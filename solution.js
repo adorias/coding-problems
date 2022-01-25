@@ -31,7 +31,6 @@ let boardsStr =
 22 11 13  6  5
  2  0 12  3  7`
 ;
-let boardsArr = boardsStr.split(/\s+/), boardsObjs = [], boards = [];
 
 function isWinningBoard(board) {    
     for(let i = 0; i < board.tileRows.length; i++) {
@@ -59,64 +58,78 @@ function getFinalScore(winningNumber, board) {
     board.tileRows.forEach(tileRow => {
         tileRow.forEach(tile => {
             if(tile.marked == false) {
-                sum += tile.value;
+                sum += parseInt(tile.value);
+
             }
         });
     });
-    console.log('final score');
-    console.log(sum * winningNumber);
+    console.log('sum: ' + sum);
+    console.log('final score: ' + (sum * winningNumber));
     return (sum * winningNumber);
 }
 
-// Turn all array values into tiles.
-boardsArr.forEach(tile => {
-    boardsObjs.push(new Tile(tile, false));
-});
+function parseBoards(boardsStr) {
+    // Initialize arrays. Use regex to convert all board string values into array values.
+    let boardsArr = boardsStr.split(/\s+/), boardsObjs = [], boards = [];
 
-// Separate tiles into Boards.
-while(boardsObjs.length) {
-    boards.push(new Board(boardsObjs.splice(0, 25)));
+    // Turn all array values into tiles.
+    boardsArr.forEach(tile => {
+        boardsObjs.push(new Tile(tile, false));
+    });
+
+    // Separate tiles into Boards.
+    while(boardsObjs.length) {
+        boards.push(new Board(boardsObjs.splice(0, 25)));
+    }
+
+    // Turn 1D boards into 2D boards. (easier manipulation).
+    boards.forEach(board => {
+        let tempArr = [];
+        while(board.tileRows.length) {
+            tempArr.push(board.tileRows.splice(0, 5));
+        }
+        board.tileRows = tempArr;
+    });
+
+    return boards;
 }
 
-// Turn 1D boards into 2D boards. (easier manipulation).
-boards.forEach(board => {
-    let tempArr = [];
-    while(board.tileRows.length) {
-        tempArr.push(board.tileRows.splice(0, 5));
-    }
-    board.tileRows = tempArr;
-});
+let boards = parseBoards(boardsStr);
 
-// 
-randomNumbers.forEach(randomNumber => {
-    console.log('RandomNumber being generated')
+// Go through each number sequentially, until you find a winning board
+//NOTE: For loop used in order to be able to use "break", which isn't allowed in a forEach loop.
+for(let i = 0; i < randomNumbers.length; i++) {
+    let winTracker = false;
     // For each board
     boards.forEach(board => {
-        console.log('board')
         // Mark the tile when the number is found (if available)
         board.tileRows.forEach(tileRow => {
             tileRow.forEach(tile => {
                 // If the tile has the same value as the random number
-                if(tile.value == randomNumber) {
-                    console.log('tile is random number');
+                if(tile.value == randomNumbers[i]) {
                     // Mark the tile
                     tile.marked = true;
                     // Check if the board won
                     if(isWinningBoard(board)) {
                         // Get the final score
-                        getFinalScore(randomNumber, board)
-                        //TODO: Break
-                        console.log("I got the final score!");
-                        //return false;
+                        console.log(randomNumbers[i]);
+                        console.log(board);
+                        getFinalScore(randomNumbers[i], board)
+                        // Break out of for loop
+                        winTracker = true;
                     }
                 }
             })
         });
     });
-    //return true;
-});
+    // If the winning board is found, end the game.
+    if(winTracker == true) {
+        break;
+    }
+}
 
 module.exports = {
+    parseBoards,
     isWinningBoard,
     getFinalScore
 }
