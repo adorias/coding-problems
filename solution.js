@@ -1,3 +1,12 @@
-module.exports = function() {
-    return "Hello World";
+function mapCoordinate() {
+
+}
+
+function getOverlapCount() {
+
+}
+
+module.exports = {
+    mapCoordinate,
+    getOverlapCount
 }
