@@ -1002,6 +1002,45 @@ let movements = [
 ]
 
 let horizontalPos = 0, depth = 0, aim = 0;
+class Submarine {
+    constructor(depthMeasurements) {
+        this.depthMeasurements = depthMeasurements;
+    }
+
+    increaseCount() {
+        let count = 0;
+        for (let i=1 ; i<this.depthMeasurements.length; i+=1) {
+            if (this.depthMeasurements[i-1]< this.depthMeasurements[i]) {
+                count++;
+            }  
+        } 
+        return count;
+    }
+
+    getSlidingWindowEndIndex() {
+        return this.depthMeasurements.length - 2;
+    }
+
+    calculateSlidingWindowSums() {
+        let result = [];
+        for (let i=0 ; i< this.getSlidingWindowEndIndex(); i+=1) {
+            const sum = this.depthMeasurements.slice(i, i+3).reduce((partialSum, a) => partialSum + a, 0);
+            result.push(sum);
+        } 
+        return result;
+    }
+}
+
+
+const sum = [1, 2, 3].reduce((partialSum, a) => partialSum + a, 0);
+console.log(sum); // 6
+
+
+class Widget {
+    constructor() {
+        this.x = "hello";
+    }
+}
 
 function move(movement) {
     // Replaces the value of the aim variable by the one given in the test case.
@@ -1039,4 +1078,11 @@ console.log(product(horizontalPos, depth));
 module.exports = {
     move,
     product
+}
+let submarine = new Submarine(depthMeasurements)
+console.log(submarine.increaseCount())
+
+module.exports = {
+    Submarine,
+    Widget
 }
